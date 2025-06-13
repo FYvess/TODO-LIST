@@ -1,4 +1,5 @@
 # Todo List Project
+##NO DATABASE
 
 This repository contains different versions and variations of the "Todo Daily" application.
 
