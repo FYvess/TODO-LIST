@@ -1,0 +1,32 @@
+<%- include("partial/header.ejs", { active: "home" }) %>
+
+<section class="home">
+  <img
+    class="home-logo"
+    src="/image/image.png"
+    alt="ToDo Daily Logo"
+    style="display: block; margin: 0 auto 2rem auto; max-width: 180px; width: 100%; height: auto; border-radius: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.08);"
+  />
+
+  <h1 class="home-title">ToDo Daily</h1>
+  <div class="home-description">
+    <p>
+      What a great way to start your day! Keep track of your tasks and
+      never forget what you need to do. This simple app helps you organize
+      your daily agenda and shopping list.
+    </p>
+  </div>
+  
+  <div class="home-buttons">
+    <form action="/submit" method="POST" class="d-flex gap-3">
+      <button type="submit" name="action" value="action1" class="btn">
+        Agenda Today
+      </button>
+      <button type="submit" name="action" value="action2" class="btn">
+        Shopping List
+      </button>
+    </form>
+  </div>
+</section>
+
+<%- include("partial/footer.ejs") %>

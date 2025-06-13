@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Shopping List</title>
+        <style>
+            body {
+                background: #f5f3e7;
+                font-family: 'Segoe UI', Arial, sans-serif;
+            }
+            .container {
+                max-width: 480px;
+                min-height: 70vh;
+                margin: 40px auto;
+                padding: 32px 28px 24px 28px;
+                background: #fffbe7;
+                border-radius: 18px;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 1.5px 0 #e0c97f inset;
+                border: 2px solid #f7e9b0;
+                position: relative;
+                transition: box-shadow 0.2s;
+            }
+            .container:hover {
+                box-shadow: 0 12px 40px rgba(0,0,0,0.18), 0 2px 0 #e0c97f inset;
+            }
+            h1 {
+                font-family: 'Permanent Marker', cursive, sans-serif;
+                color: #bfa14a;
+                text-align: center;
+                margin-bottom: 28px;
+                letter-spacing: 1px;
+                text-shadow: 0 2px 0 #fffbe7, 0 4px 8px #e0c97f44;
+            }
+            .form-container {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 18px;
+            }
+            input[type="text"], input[type="number"] {
+                flex: 1;
+                padding: 10px 14px;
+                border-radius: 6px;
+                border: 1.5px solid #e0c97f;
+                background: #fffde4;
+                font-size: 1rem;
+                outline: none;
+                transition: border 0.2s;
+            }
+            input[type="text"]:focus, input[type="number"]:focus {
+                border-color: #bfa14a;
+            }
+            .btn {
+                background: #ffe066;
+                color: #7d6b1c;
+                border: none;
+                border-radius: 6px;
+                padding: 10px 18px;
+                font-weight: bold;
+                font-size: 1rem;
+                box-shadow: 0 2px 8px #e0c97f44;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+            .btn:hover {
+                background: #ffe799;
+            }
+            .btn-danger {
+                background-color: #ff6666;
+            }
+            .btn-sm {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                position: relative;
+                z-index: 1;
+            }
+            .list-group-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+                padding: 14px 16px;
+                margin-bottom: 10px;
+                background: #fffbe7;
+                border-radius: 10px;
+                border-left: 6px solid #ffe066;
+                box-shadow: 0 2px 8px #e0c97f33;
+                font-size: 1.08rem;
+                position: relative;
+                transition: box-shadow 0.2s;
+            }
+            .list-group-item:last-child {
+                margin-bottom: 0;
+            }
+            .list-group-item .content {
+                flex: 1;
+                min-width: 0;
+                word-break: break-word;
+            }
+            .list-group-item .price {
+                flex: 0 0 90px;
+                min-width: 70px;
+                display: inline;
+                float: right;
+                font-weight: 600;
+                color: #bfa14a;
+                font-size: 1.08rem;
+            }
+            .list-group-item input[type="checkbox"] {
+                accent-color: #ffe066;
+                width: 18px;
+                height: 18px;
+                margin-right: 8px;
+            }
+            .completed {
+                text-decoration: line-through;
+                color: #bfa14a;
+                opacity: 0.7;
+            }
+            .empty-note {
+                background: #fff9c4;
+                border: 2px dashed #ffe066;
+                color: #bfa14a;
+                font-style: italic;
+                text-align: center;
+                box-shadow: 0 2px 8px #e0c97f33;
+                border-radius: 10px;
+                padding: 18px 0;
+                margin: 24px 0 0 0;
+            }
+            .total-row {
+                background: #fffde4;
+                border-left: 6px solid #ffe066;
+                border-radius: 10px;
+                font-weight: bold;
+                color: #bfa14a;
+                box-shadow: 0 2px 8px #e0c97f33;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 14px 16px;
+                margin-top: 18px;
+                font-size: 1.12rem;
+            }
+            .total-row span:first-child {
+                flex: 1;
+            }
+            .total-row span:last-child {
+                display: inline;
+                float: right;
+                font-size: 1.12rem;
+            }
+            @media (max-width: 600px) {
+                .container {
+                    max-width: 98vw;
+                    padding: 16px 6vw;
+                }
+                h1 {
+                    font-size: 1.4rem;
+                }
+                .list-group-item, .total-row {
+                    font-size: 1rem;
+                    padding: 10px 8px;
+                }
+            }
+        </style>
+        <!-- Google Fonts for notebook style -->
+        <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <%- include("partial/header.ejs", { active: "pabili" }) %>
+        <div class="container">
+            <h1>Shopping List</h1>
+            
+            <form action="/grocery/add" method="POST" class="form-container">
+                <input type="text" name="pabili" placeholder="Enter item to buy" required>
+                <input type="number" name="price" placeholder="Price" step="0.01" min="0" required style="max-width: 90px;">
+                <button type="submit" class="btn">Add Item</button>
+            </form>
+            
+            <ul id="grocery-list">
+                <% let total = 0; %>
+                <% if (groceries && groceries.length > 0) { %>
+                    <% groceries.forEach(function(item) { %>
+                        <% total += Number(item.price) || 0; %>
+                        <li class="list-group-item grocery-item" data-id="<%= item.id %>">
+                            <input 
+                                type="checkbox" 
+                                class="grocery-checkbox" 
+                                data-id="<%= item.id %>"
+                                <%= item.completed ? 'checked' : '' %>
+                                onchange="this.parentElement.querySelectorAll('.grocery-content, .price').forEach(el => el.classList.toggle('completed', this.checked))"
+                            >
+                            <span 
+                                class="content grocery-content <%= item.completed ? 'completed' : '' %>" 
+                                data-id="<%= item.id %>"
+                            >
+                                <%= item.text %>
+                            </span>
+                            <span class="price<%= item.completed ? ' completed' : '' %>"><%= item.price.toFixed(2) %></span>
+                            <div class="actions">
+                                <button 
+                                    class="btn btn-danger btn-sm delete-grocery" 
+                                    data-id="<%= item.id %>"
+                                    aria-label="Delete item"
+                                >
+                                    ✕
+                                </button>
+                            </div>
+                        </li>
+                    <% }); %>
+                <% } else { %>
+                    <li class="empty-note">No items for today.<br>Write something to get started!</li>
+                <% } %>
+            </ul>
+            
+            <div class="total-row">
+                <span>Total</span>
+                <span id="grocery-total"><%= typeof total === 'number' ? total.toFixed(2) : '0.00' %></span>
+            </div>
+        </div>
+        <script src="/js/app.js"></script>
+        <%- include("partial/footer.ejs") %>
+    </body>
+</html>

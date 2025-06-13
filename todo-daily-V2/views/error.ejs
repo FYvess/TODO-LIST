@@ -1,0 +1,11 @@
+<%- include("partial/header.ejs") %>
+
+<div class="container">
+  <h1>Oops! Something went wrong</h1>
+  <div class="empty-note">
+    <p><%= error || 'An unexpected error occurred.' %></p>
+    <p>Please try again or go back to the <a href="/">home page</a>.</p>
+  </div>
+</div>
+
+<%- include("partial/footer.ejs") %>

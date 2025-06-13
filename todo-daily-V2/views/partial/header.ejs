@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDo Daily - Organize Your Day</title>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/layout/styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="header-container">
+        <a href="/" class="brand">
+          <img src="/image/image.png" alt="ToDo Daily Logo" width="30" height="30">
+          <span>ToDo Daily</span>
+        </a>
+        <nav>
+          <ul class="nav-menu">
+            <li class="nav-item">
+              <a href="/" class="<%= locals.active === 'home' ? 'active' : '' %>">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="/agenda" class="<%= locals.active === 'agenda' ? 'active' : '' %>">Agenda</a>
+            </li>
+            <li class="nav-item">
+              <a href="/pabili" class="<%= locals.active === 'pabili' ? 'active' : '' %>">Shopping List</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToDo Daily - Organize Your Day</title>
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.ico" type="x-icon">
+  <meta name="description" content="ToDo Daily - A simple and beautiful app to organize your tasks and shopping list">
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="#" class="brand" data-page="home">
+        <img src="image.png" alt="ToDo Daily Logo" width="30" height="30">
+        <span>ToDo Daily</span>
+      </a>
+      <nav>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="#" class="active" data-page="home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" data-page="agenda">Agenda</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" data-page="pabili">Shopping List</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Home Page -->
+  <section id="home-page" class="page active">
+    <div class="home">
+      <img class="home-logo" src="image.png" alt="ToDo Daily Logo">
+      <h1 class="home-title">ToDo Daily</h1>
+      <div class="home-description">
+        <p>
+          What a great way to start your day! Keep track of your tasks and
+          never forget what you need to do. This simple app helps you organize
+          your daily agenda and shopping list.
+        </p>
+      </div>
+      <div class="home-buttons">
+        <button class="btn" data-page="agenda">Agenda Today</button>
+        <button class="btn" data-page="pabili">Shopping List</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Agenda Page -->
+  <section id="agenda-page" class="page">
+    <div class="container">
+      <h1>Agenda Today</h1>
+      <div class="form-container">
+        <input type="text" id="task-input" placeholder="Enter your task for today" required>
+        <button type="button" id="add-task-btn" class="btn">Add Task</button>
+      </div>
+      <ul id="task-list">
+        <!-- Tasks will be added here dynamically -->
+        <li class="empty-note">No tasks for today.<br>Write something to get started!</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Shopping List Page -->
+  <section id="pabili-page" class="page">
+    <div class="container">
+      <h1>Shopping List</h1>
+      <div class="form-container">
+        <input type="text" id="grocery-input" placeholder="Enter item to buy" required>
+        <input type="number" id="price-input" placeholder="Price" style="width: 150px;" step="0.01" min="0" required>
+        <button type="button" id="add-grocery-btn" class="btn">Add Item</button>
+      </div>
+      <ul id="grocery-list">
+        <!-- Grocery items will be added here dynamically -->
+        <li class="empty-note">No items for today.<br>Write something to get started!</li>
+      </ul>
+      <div class="total-row">
+        <span>Total</span>
+        <span id="grocery-total">0.00</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>&copy; <span id="current-year"></span> ToDo Daily - Organize your day with ease</p>
+  </footer>
+
+  <!-- Templates -->
+  <template id="task-template">
+    <li class="list-group-item task-item" data-id="">
+      <input type="checkbox" class="task-checkbox">
+      <span class="content task-content"></span>
+      <div class="actions">
+        <button class="btn btn-danger btn-sm delete-task" aria-label="Delete task">✕</button>
+      </div>
+    </li>
+  </template>
+
+  <template id="grocery-template">
+    <li class="list-group-item grocery-item" data-id="">
+      <input type="checkbox" class="grocery-checkbox">
+      <span class="content grocery-content"></span>
+      <span class="price"></span>
+      <div class="actions">
+        <button class="btn btn-danger btn-sm delete-grocery" aria-label="Delete item">✕</button>
+      </div>
+    </li>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>

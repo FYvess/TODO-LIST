@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Agenda Today</title>
+        <style>
+            body {
+                background: #f5f3e7;
+                font-family: 'Segoe UI', Arial, sans-serif;
+            }
+            .container {
+                max-width: 480px;
+                min-height: 70vh;
+                margin: 40px auto;
+                padding: 32px 28px 24px 28px;
+                background: #fffbe7;
+                border-radius: 18px;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 1.5px 0 #e0c97f inset;
+                border: 2px solid #f7e9b0;
+                position: relative;
+                transition: box-shadow 0.2s;
+            }
+            .container:hover {
+                box-shadow: 0 12px 40px rgba(0,0,0,0.18), 0 2px 0 #e0c97f inset;
+            }
+            h1 {
+                font-family: 'Permanent Marker', cursive, sans-serif;
+                color: #bfa14a;
+                text-align: center;
+                margin-bottom: 28px;
+                letter-spacing: 1px;
+                text-shadow: 0 2px 0 #fffbe7, 0 4px 8px #e0c97f44;
+            }
+            form {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 18px;
+            }
+            input[type="text"], input[type="number"] {
+                flex: 1;
+                padding: 10px 14px;
+                border-radius: 6px;
+                border: 1.5px solid #e0c97f;
+                background: #fffde4;
+                font-size: 1rem;
+                outline: none;
+                transition: border 0.2s;
+            }
+            input[type="text"]:focus, input[type="number"]:focus {
+                border-color: #bfa14a;
+            }
+            button[type="submit"] {
+                background: #ffe066;
+                color: #7d6b1c;
+                border: none;
+                border-radius: 6px;
+                padding: 10px 18px;
+                font-weight: bold;
+                font-size: 1rem;
+                box-shadow: 0 2px 8px #e0c97f44;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+            button[type="submit"]:hover {
+                background: #ffe799;
+            }
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                position: relative;
+                z-index: 1;
+            }
+            .list-group-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+                padding: 14px 16px;
+                margin-bottom: 10px;
+                background: #fffbe7;
+                border-radius: 10px;
+                border-left: 6px solid #ffe066;
+                box-shadow: 0 2px 8px #e0c97f33;
+                font-size: 1.08rem;
+                position: relative;
+                transition: box-shadow 0.2s;
+            }
+            .list-group-item:last-child {
+                margin-bottom: 0;
+            }
+            .list-group-item .content {
+                flex: 1;
+                min-width: 0;
+                word-break: break-word;
+            }
+            .list-group-item .price {
+                flex: 0 0 90px;
+                min-width: 70px;
+                display: inline;
+                float: right;
+                font-weight: 600;
+                color: #bfa14a;
+                font-size: 1.08rem;
+            }
+            .list-group-item input[type="checkbox"] {
+                accent-color: #ffe066;
+                width: 18px;
+                height: 18px;
+                margin-right: 8px;
+            }
+            .completed {
+                text-decoration: line-through;
+                color: #bfa14a;
+                opacity: 0.7;
+            }
+            .empty-note {
+                background: #fff9c4;
+                border: 2px dashed #ffe066;
+                color: #bfa14a;
+                font-style: italic;
+                text-align: center;
+                box-shadow: 0 2px 8px #e0c97f33;
+                border-radius: 10px;
+                padding: 18px 0;
+                margin: 24px 0 0 0;
+            }
+            .total-row {
+                background: #fffde4;
+                border-left: 6px solid #ffe066;
+                border-radius: 10px;
+                font-weight: bold;
+                color: #bfa14a;
+                box-shadow: 0 2px 8px #e0c97f33;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 14px 16px;
+                margin-top: 18px;
+                font-size: 1.12rem;
+            }
+            .total-row span:first-child {
+                flex: 1;
+            }
+            .total-row span:last-child {
+                display: inline;
+                float: right;
+                font: 50px;
+            }
+            @media (max-width: 600px) {
+                .container {
+                    max-width: 98vw;
+                    padding: 16px 6vw;
+                }
+                h1 {
+                    font-size: 1.4rem;
+                }
+                .list-group-item, .total-row {
+                    font-size: 1rem;
+                    padding: 10px 8px;
+                }
+            }
+        </style>
+        <!-- Google Fonts for notebook style -->
+        <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <%- include("partial/header.ejs") %>
+        <div class="container">
+            <h1>Grocery Time</h1>
+            <form action="/getGrocery" method="POST">
+                <input type="text" name="pabili" placeholder="Enter your task for today" required>
+                <input type="number" name="price" placeholder="how much" required>
+                <button type="submit">Add Task</button>
+            </form>
+            <ul>
+                <% let total = 0; %>
+                <% if (pabili.length > 0) { %>
+                    <% for(let i=0; i<pabili.length; i++){ %>
+                        <% total += Number(prices[i]) || 0; %>
+                        <li class="list-group-item">
+                            <input type="checkbox" onclick="this.nextElementSibling.classList.toggle('completed')">
+                            <span class="content"><%= pabili[i] %></span>
+                            <span class="price"><%= prices[i] %></span>
+                        </li>
+                    <% } %>
+                <% } else { %>
+                    <li class="empty-note">No Items for today.<br>Write something to get started!</li>
+                <% } %>
+            </ul>
+            <div class="total-row">
+                <span>Total</span>
+                <span><%= total %></span>
+            </div>
+        </div>
+    </body>
+</html>
